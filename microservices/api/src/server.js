@@ -17,8 +17,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-//app.use('/', hasuraRouter);
-app.post(function(req,res){
+app.use('/', hasuraRouter);
+
+app.post("/delete",function(req,res){
   var hasura_id = req.body.hasura_id;
   console.log(hasura_id)
   console.log(hasura_id+" yeah i am here")
@@ -36,6 +37,7 @@ app.post(function(req,res){
     })
   }
   request(deleteOptions, function(error, response, body) {
+    console.log("response 1:-"+response)
     if (error) {
         console.log('Error from delete-user request: ');
         console.log(error)
@@ -47,7 +49,7 @@ app.post(function(req,res){
     res.json(JSON.parse(body))
   })
 
-})
+});
 
 app.listen(8080, function () {
   console.log('Example app listening on port 8080!');

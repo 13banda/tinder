@@ -7,36 +7,11 @@ router.route("/").get(function (req, res) {
   console.log("loges")
   res.send("Hello-React")
 })
-router.route("/delete").post(function(req,res){
-  let hasura_id = req.body.hasura_id;
-  console.log(hasura_id)
-  console.log(hasura_id+" yeah i am here")
-  var deleteOptions = {
-    url: config.projectConfig.url.auth.delete_user,
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Hasura-User-Id': 1,
-      'X-Hasura-Role': 'admin',
-      "X-Hasura-Allowed-Roles": "user,admin"
-    },
-    body: JSON.stringify({
-        "hasura_id": hasura_id
-    })
-  }
-  request(deleteOptions, function(error, response, body) {
-    if (error) {
-        console.log('Error from delete-user request: ');
-        console.log(error)
-        res.status(500).json({
-          'error': error,
-          'message': 'delete-user request failed'
-        });
-    }
-    res.json(JSON.parse(body))
-  })
-
+router.route("/").post(function (req, res) {
+  console.log(req.body.hasura_id+" this is here don't worry")
+  res.send("Hello-React")
 })
+
 router.route("/signup").post(function(req,res){
    // post to auth end get result
     let username=req.body.username;
