@@ -8,7 +8,7 @@ router.route("/").get(function (req, res) {
 })
 router.route("/delete-user").post(function(req,res){
   let hasura_id = req.body.hasura_id;
-
+  console.log(hasura_id+" yeah i am here")
   var deleteOptions = {
     url: config.projectConfig.url.auth.delete_user,
     method: 'POST',
@@ -22,7 +22,7 @@ router.route("/delete-user").post(function(req,res){
         "hasura_id": hasura_id
     })
   }
-  request(signupOptions, function(error, response, body) {
+  request(deleteOptions, function(error, response, body) {
     if (error) {
         console.log('Error from delete-user request: ');
         console.log(error)
