@@ -4,9 +4,10 @@ var config = require('./config');
 var request = require('request');
 
 router.route("/").get(function (req, res) {
+  console.log("loges")
   res.send("Hello-React")
 })
-router.route("/delete-user").post(function(req,res){
+router.route("/delete").post(function(req,res){
   let hasura_id = req.body.hasura_id;
   console.log(hasura_id+" yeah i am here")
   var deleteOptions = {
