@@ -9,7 +9,7 @@ router.route("/").get(function (req, res) {
 })
 router.route("/").post(function (req, res) {
   console.log(req.body.hasura_id+" this is here don't worry")
-  res.send("Hello-React")
+  res.send(req.body.hasura_id)
 })
 
 router.route("/signup").post(function(req,res){

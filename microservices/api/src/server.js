@@ -4,6 +4,8 @@ var request = require('request');
 var router = express.Router();
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var config = require('./config');
+
 require('request-debug')(request);
 
 var hasuraRouter = require('./hasuraExamples');
