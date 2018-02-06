@@ -9,6 +9,7 @@ router.route("/").get(function (req, res) {
 })
 router.route("/delete").post(function(req,res){
   let hasura_id = req.body.hasura_id;
+  console.log(hasura_id)
   console.log(hasura_id+" yeah i am here")
   var deleteOptions = {
     url: config.projectConfig.url.auth.delete_user,
