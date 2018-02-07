@@ -233,7 +233,7 @@ app.post("/insert-user",function(req,res){
     const gender = req.body.gender;
     const file_id = req.body.file_id;
     const age = req.body.age;
-    const about = req.body.about;
+    const about_me = req.body.about_me;
     const city = req.body.city;
       //Fetch all rows from table - articles
       var selectOptions = {
@@ -257,7 +257,7 @@ app.post("/insert-user",function(req,res){
                       "gender": gender,
                       "profile_file_id": file_id,
                       "age":age,
-                      "about_me": about,
+                      "about_me": about_me,
                       "city": city
                   }
               ]
