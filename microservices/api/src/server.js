@@ -24,37 +24,100 @@ app.use('/', hasuraRouter);
 app.post("/delete",function(req,res){
   //var hasura_id = req.body.hasura_id;
   console.log(req.headers);
-  const hasura_id = req.headers['X-Hasura-User-Id'];
+  const hasura_id = req.headers['x-hasura-user-id'];
+  const hasura_role = req.headers['x-hasura-role'];
+  const hasura_allowed_role = req.headers['x-hasura-allowed-roles'];
+
   if( hasura_id > 1){
-      var deleteOptions = {
-        url: config.projectConfig.url.auth.delete_user,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Hasura-User-Id': 1,
-          'X-Hasura-Role': 'admin',
-          "X-Hasura-Allowed-Roles": "user,admin"
-        },
-        body: JSON.stringify({
-            "hasura_id": hasura_id
-        })
-      }
-      request(deleteOptions, function(error, response, body) {
-        console.log("response 1:-"+response)
-        if (error) {
-            console.log('Error from delete-user request: ');
-            console.log(error)
-            res.status(500).json({
-              'error': error,
+        var deleteOptions = {
+          url: config.projectConfig.url.auth.delete_user,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Hasura-User-Id': 1,
+            'X-Hasura-Role': 'admin',
+            "X-Hasura-Allowed-Roles": "user,admin"
+          },
+          body: JSON.stringify({
+              "hasura_id": hasura_id
+          })
+        }
+        request(deleteOptions, function(error, response, body) {
+          console.log("response 1:-"+response)
+          if (error) {
+              console.log('Error from delete-user request: ');
+              console.log(error)
+              res.status(500).json({
+                'error': error,
               'message': 'delete-user request failed'
             });
         }
-        res.json(JSON.parse(body))
+        else
+        {
+            var deleteOptions = {
+                url: config.projectConfig.url.data,
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-Hasura-User-Id': hasura_id,
+                  'X-Hasura-Role': hasura_role,
+                  "X-Hasura-Allowed-Roles": hasura_allowed_role
+                },
+                body: JSON.stringify({
+                                      "type": "bulk",
+                                      "args": [
+                                          {
+                                              "type": "delete",
+                                              "args": {
+                                                  "table": "match",
+                                                  "where": {
+                                                      "$or": [
+                                                          {
+                                                              "hasura_id": {
+                                                                  "$eq": hasura_id
+                                                              }
+                                                          },
+                                                          {
+                                                              "like_user_id": {
+                                                                  "$eq": hasura_id
+                                                              }
+                                                          }
+                                                      ]
+                                                  }
+                                              }
+                                          },
+                                          {
+                                              "type": "delete",
+                                              "args": {
+                                                  "table": "userinfo",
+                                                  "where": {
+                                                      "hasura_id": {
+                                                          "$eq": hasura_id
+                                                      }
+                                                  }
+                                              }
+                                          }
+                                      ]
+                                    })
+            }
+            request(deleteOptions, function(error, response, body) {
+              console.log("response 1:-"+response)
+              if (error) {
+                  console.log(error)
+                  res.status(500).json({
+                    'error': error,
+                    'message': 'delete-user request failed'
+                  });
+              }
+              res.json(JSON.parse(body))
+            })
+        }
+        //res.json(JSON.parse(body)) this line not execute anywhere
       })
     }
     else{
       res.status(500).json({
-        'message': 'acees denied! that it. delete-user request failed'
+        'message': 'delete-user request failed'
       });
     }
 });
