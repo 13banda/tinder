@@ -27,7 +27,7 @@ app.get("/get-allusers-info",function(req,res){
   if( hasura_id > 1){
       //Fetch all rows from table - articles
       var selectOptions = {
-        url: config.url.data,
+        url: config.projectConfig.url.data,
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
