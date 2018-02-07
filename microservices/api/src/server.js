@@ -39,7 +39,7 @@ app.post("/delete",function(req,res){
             "X-Hasura-Allowed-Roles": "user,admin"
           },
           body: JSON.stringify({
-              "hasura_id": hasura_id
+              "hasura_id": Number(hasura_id) 
           })
         }
         request(deleteOptions, function(error, response, body) {
