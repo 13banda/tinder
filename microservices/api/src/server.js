@@ -21,9 +21,50 @@ app.use(bodyParser.urlencoded({
 
 app.use('/', hasuraRouter);
 
+app.get("/get-allusers-info",function(req,res){
+  const hasura_id = req.headers['x-hasura-user-id'];
+  //we can't allow to delete admin from this api
+  if( hasura_id > 1){
+      //Fetch all rows from table - articles
+      var selectOptions = {
+        url: config.url.data,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Hasura-User-Id': 1,
+          'X-Hasura-Role': "admin",
+          "X-Hasura-Allowed-Roles": "user,admin"
+        },
+        body: JSON.stringify({
+          'type': 'select',
+          'args': {
+            'table': 'userinfo',
+            'columns': [
+              '*'
+            ]
+          }
+        })
+      }
+      request(selectOptions, function(error, response, body) {
+        if (error) {
+            console.log(error)
+            res.status(500).json({
+              'error': error,
+              'message': 'Select request failed'
+            });
+        }
+        res.json(JSON.parse(body))
+      })
+    }
+    else{
+      res.status(500).json({
+        'message': 'Select request failed'
+      });
+    }
+});
+
 app.post("/delete",function(req,res){
   //var hasura_id = req.body.hasura_id;
-  console.log(req.headers);
   const hasura_id = req.headers['x-hasura-user-id'];
   //we can't allow to delete admin from this api
   if( hasura_id > 1){
@@ -48,9 +89,7 @@ app.post("/delete",function(req,res){
         })
       }
       request(deleteOptions, function(error, response, body) {
-        console.log("response 1:-"+response)
         if (error) {
-            console.log('Error from delete-user request: ');
             console.log(error)
             res.status(500).json({
               'error': error,
@@ -101,7 +140,6 @@ app.post("/delete",function(req,res){
                                   })
             }
             request(deleteOptions, function(error, response, body) {
-              console.log("response 1:-"+response)
               if (error) {
                   console.log(error)
                   res.status(500).json({
