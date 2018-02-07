@@ -25,21 +25,25 @@ app.post("/delete",function(req,res){
   //var hasura_id = req.body.hasura_id;
   console.log(req.headers);
   const hasura_id = req.headers['x-hasura-user-id'];
-  const hasura_role = req.headers['x-hasura-role'];
-  const hasura_allowed_role = req.headers['x-hasura-allowed-roles'];
-
+  //we can't allow to delete admin from this api
   if( hasura_id > 1){
+    // permission error occur when delete using bulk query by user
+    // we need to exc. as admin for that ok
+    const hasura_role = req.headers['x-hasura-role'];
+    const hasura_allowed_role = req.headers['x-hasura-allowed-roles'];
+    // common headers for request as admin
+    var headers = {
+        'Content-Type': 'application/json',
+        'X-Hasura-User-Id': hasura_id,
+        'X-Hasura-Role': hasura_role,
+        "X-Hasura-Allowed-Roles": hasura_allowed_role
+      }
         var deleteOptions = {
           url: config.projectConfig.url.auth.delete_user,
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Hasura-User-Id': 1,
-            'X-Hasura-Role': 'admin',
-            "X-Hasura-Allowed-Roles": "user,admin"
-          },
+          headers: headers,
           body: JSON.stringify({
-              "hasura_id": Number(hasura_id) 
+              "hasura_id": Number(hasura_id)
           })
         }
         request(deleteOptions, function(error, response, body) {
@@ -57,12 +61,7 @@ app.post("/delete",function(req,res){
             var deleteOptions = {
                 url: config.projectConfig.url.data,
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'X-Hasura-User-Id': hasura_id,
-                  'X-Hasura-Role': hasura_role,
-                  "X-Hasura-Allowed-Roles": hasura_allowed_role
-                },
+                headers: headers,
                 body: JSON.stringify({
                                       "type": "bulk",
                                       "args": [
