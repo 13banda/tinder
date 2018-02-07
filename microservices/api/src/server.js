@@ -34,70 +34,71 @@ app.post("/delete",function(req,res){
     // common headers for request as admin
     var headers = {
         'Content-Type': 'application/json',
-        'X-Hasura-User-Id': hasura_id,
-        'X-Hasura-Role': hasura_role,
-        "X-Hasura-Allowed-Roles": hasura_allowed_role
+        'X-Hasura-User-Id': 1,
+        'X-Hasura-Role': "admin",
+        "X-Hasura-Allowed-Roles": "user,admin"
       }
-        var deleteOptions = {
-          url: config.projectConfig.url.auth.delete_user,
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify({
-              "hasura_id": Number(hasura_id)
-          })
-        }
-        request(deleteOptions, function(error, response, body) {
-          console.log("response 1:-"+response)
-          if (error) {
-              console.log('Error from delete-user request: ');
-              console.log(error)
-              res.status(500).json({
-                'error': error,
-              'message': 'delete-user request failed'
-            });
-        }
-        else
-        {
-            var deleteOptions = {
-                url: config.projectConfig.url.data,
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify({
-                                      "type": "bulk",
-                                      "args": [
-                                          {
-                                              "type": "delete",
-                                              "args": {
-                                                  "table": "match",
-                                                  "where": {
-                                                      "$or": [
-                                                          {
-                                                              "hasura_id": {
-                                                                  "$eq": hasura_id
-                                                              }
-                                                          },
-                                                          {
-                                                              "like_user_id": {
-                                                                  "$eq": hasura_id
-                                                              }
-                                                          }
-                                                      ]
-                                                  }
-                                              }
-                                          },
-                                          {
-                                              "type": "delete",
-                                              "args": {
-                                                  "table": "userinfo",
-                                                  "where": {
-                                                      "hasura_id": {
-                                                          "$eq": hasura_id
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      ]
-                                    })
+
+      var deleteOptions = {
+        url: config.projectConfig.url.auth.delete_user,
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+            "hasura_id": Number(hasura_id)
+        })
+      }
+      request(deleteOptions, function(error, response, body) {
+        console.log("response 1:-"+response)
+        if (error) {
+            console.log('Error from delete-user request: ');
+            console.log(error)
+            res.status(500).json({
+              'error': error,
+            'message': 'delete-user request failed'
+          });
+      }
+      else
+      {
+          var deleteOptions = {
+              url: config.projectConfig.url.data,
+              method: 'POST',
+              headers: headers,
+              body: JSON.stringify({
+                                    "type": "bulk",
+                                    "args": [
+                                        {
+                                            "type": "delete",
+                                            "args": {
+                                                "table": "match",
+                                                "where": {
+                                                    "$or": [
+                                                        {
+                                                            "hasura_id": {
+                                                                "$eq": hasura_id
+                                                            }
+                                                        },
+                                                        {
+                                                            "like_user_id": {
+                                                                "$eq": hasura_id
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "type": "delete",
+                                            "args": {
+                                                "table": "userinfo",
+                                                "where": {
+                                                    "hasura_id": {
+                                                        "$eq": hasura_id
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                  })
             }
             request(deleteOptions, function(error, response, body) {
               console.log("response 1:-"+response)
