@@ -175,7 +175,7 @@ ui:
 api:
   /:
     corsPolicy: ["http://[::]:8080"]
-    enableAuth: true
+    enableAuth: false
     enableCORS: true
     enableWebsockets: true
     locationDirectives: ""

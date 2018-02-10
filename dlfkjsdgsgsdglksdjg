@@ -1,0 +1,38 @@
+[33mcommit 16a0ae8b04f6689115cc41ea69dcc5e729096217[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/master[m[33m)[m
+Merge: d9a6d3f eacdda4
+Author: Sandeep singh <31692610+13banda@users.noreply.github.com>
+Date:   Mon Feb 5 17:59:39 2018 +0530
+
+    Merge pull request #1 from AnupamSinghSeervi/patch-1
+    
+    Added hasura auth (signup) api
+
+[33mcommit eacdda4e92ae00fcc58b31590035b1c7997b1130[m
+Author: Anupam Singh <anupamwants@gmail.com>
+Date:   Mon Feb 5 17:55:06 2018 +0530
+
+    Added hasura auth (signup) api
+
+[33mcommit d9a6d3f237d32288a4d139dff3eff060c244719b[m
+Author: Sandeep singh <31692610+13banda@users.noreply.github.com>
+Date:   Sun Feb 4 23:50:06 2018 +0530
+
+    rename to readme to redme-reactJS
+
+[33mcommit 88c17d017073c9fe451c400792d2f70c031d861e[m
+Author: Sandeep Singh <wwaheguru9509088985@gmail.com>
+Date:   Sun Feb 4 22:22:43 2018 +0530
+
+    solve docker file issue in ui
+
+[33mcommit 9b1f0a2921bedf902e9e250782228a88b9716b92[m
+Author: Sandeep Singh <wwaheguru9509088985@gmail.com>
+Date:   Sun Feb 4 22:13:55 2018 +0530
+
+    add tinder clone app code
+
+[33mcommit d53a2b618ea5ab0d27558aa3a0ecc0642b975af8[m
+Author: Sandeep Singh <wwaheguru9509088985@gmail.com>
+Date:   Sun Feb 4 21:32:35 2018 +0530
+
+    first commit
