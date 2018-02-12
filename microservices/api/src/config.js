@@ -1,7 +1,7 @@
 let projectConfig = {
     url: {
         data: 'http://data.hasura/v1/query',
-        fileStore: "http://filestore.hasura/v1/file/"
+        fileStore: "http://filestore.hasura/v1/file/",
         auth:  {
           delete_user:"http://auth.hasura/v1/admin/delete-user",
           signup:"http://auth.hasura/signup"
