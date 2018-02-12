@@ -347,58 +347,100 @@ router.route("/delete").post(function(req,res){
       }
       else
       {
-          var deleteOptions = {
-              url: config.projectConfig.url.data,
-              method: 'POST',
-              headers: headers,
-              body: JSON.stringify({
-                                    "type": "bulk",
-                                    "args": [
-                                        {
-                                            "type": "delete",
-                                            "args": {
-                                                "table": "match",
-                                                "where": {
-                                                    "$or": [
-                                                        {
-                                                            "hasura_id": {
-                                                                "$eq": hasura_id
-                                                            }
-                                                        },
-                                                        {
-                                                            "like_user_id": {
-                                                                "$eq": hasura_id
+          var selectFileOptions = {
+            url: config.projectConfig.url.data,
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({
+              "type": "select",
+              "args": {
+                  "table": "userinfo",
+                  "columns": [
+                      "profile_file_id"
+                  ],
+                  "where": {
+                      "hasura_id": {
+                          "$eq": Number(hasura_id)
+                      }
+                  }
+              }
+          request(selectFileOptions, function(error, response, body) {
+            if (error) {
+                res.status(500).json({
+                  'error': error,
+                  'message': 'delete-user request failed'
+                });
+            }
+            else{
+                var file_id =  body.profile_file_id
+                var deleteFileOptions = {
+                  url: config.projectConfig.url.fileStore+file_id,
+                  method: 'DELETE',
+                  headers: headers,
+                }
+                request(deleteFileOptions, function(error, response, body) {
+                  if (error) {
+                      console.log(error)
+                      res.status(500).json({
+                        'error': error,
+                        'message': 'delete-user request failed'
+                      });
+                    }
+                    else{
+                      var deleteOptions = {
+                          url: config.projectConfig.url.data,
+                          method: 'POST',
+                          headers: headers,
+                          body: JSON.stringify({
+                                                "type": "bulk",
+                                                "args": [
+                                                    {
+                                                        "type": "delete",
+                                                        "args": {
+                                                            "table": "match",
+                                                            "where": {
+                                                                "$or": [
+                                                                    {
+                                                                        "hasura_id": {
+                                                                            "$eq": hasura_id
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "like_user_id": {
+                                                                            "$eq": hasura_id
+                                                                        }
+                                                                    }
+                                                                ]
                                                             }
                                                         }
-                                                    ]
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "type": "delete",
-                                            "args": {
-                                                "table": "userinfo",
-                                                "where": {
-                                                    "hasura_id": {
-                                                        "$eq": hasura_id
+                                                    },
+                                                    {
+                                                        "type": "delete",
+                                                        "args": {
+                                                            "table": "userinfo",
+                                                            "where": {
+                                                                "hasura_id": {
+                                                                    "$eq": hasura_id
+                                                                }
+                                                            }
+                                                        }
                                                     }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                  })
-            }
-            request(deleteOptions, function(error, response, body) {
-              if (error) {
-                  console.log(error)
-                  res.status(500).json({
-                    'error': error,
-                    'message': 'delete-user request failed'
-                  });
+                                                ]
+                                              })
+                        }
+                        request(deleteOptions, function(error, response, body) {
+                          if (error) {
+                              console.log(error)
+                              res.status(500).json({
+                                'error': error,
+                                'message': 'delete-user request failed'
+                              });
+                          }
+                          res.json(JSON.parse(body))
+                        })
+                    }
+                })
               }
-              res.json(JSON.parse(body))
-            })
-        }
         //res.json(JSON.parse(body)) this line not execute anywhere
       })
     }
