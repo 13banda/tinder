@@ -181,7 +181,7 @@ export class Login extends React.Component{
       let BtnLogin = elementById('login');
       BtnLogin.innerHTML = "logging ... ";
       login(InputUser,InputPassword);
-      BtnLogin.innerHTML = "login Sucess ";
+      BtnLogin.innerHTML = "login Success ";
     }
     else{
       alert('please fill username & password')
@@ -195,7 +195,7 @@ export class Login extends React.Component{
         let BtnSignUp = elementById('signup');
         BtnSignUp.innerHTML = "SignUp ...";
         signUp(InputUser,InputPassword);
-        BtnSignUp.innerHTML = "sigUp Sucess";
+        BtnSignUp.innerHTML = " SignUp and Success";
       } else{ alert('Minimum password length is 8 characters')}
   }
   else{
@@ -211,7 +211,7 @@ export class Login extends React.Component{
            <img src={config.icons.tinder}  />
         </TinderLogo>
         <P>Welcome</P>
-        <Input id="username" placeholder="username" type="text" />
+        <Input id="username" placeholder="User Name" type="text" />
         <Input id="password" placeholder="password" type="password" />
         <ButtonContainer >
           <Button id='login' style={{ marginRight:"20px"}} onClick={this.handleLogin}>Login</Button>
