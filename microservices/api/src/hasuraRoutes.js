@@ -10,6 +10,7 @@ var request = require('request');
 
 // like other user
 router.route("/like").post(function(req,res){
+  console.log("are you see me.?")
   const hasura_id = req.headers['x-hasura-user-id'];
   //we can't allow to delete admin from this api
   if( hasura_id > 1){
@@ -376,8 +377,9 @@ router.route("/delete").post(function(req,res){
                 }
                 else{
                   console.log("2");
-                  const l = JOSN.parse(body);
-                  var file_id =  l[0].profile_file_id
+                  const lb = JOSN.parse(body);
+                  console.log(lb)
+                  var file_id =  lb[0].profile_file_id
                   var deleteFileOptions = {
                     url: config.projectConfig.url.fileStore+file_id,
                     method: 'DELETE',
