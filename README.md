@@ -1,6 +1,6 @@
 # Companion
 
-This is a simple clone of Tinder’s mobile application. It allows users to like and dislike other users and see their list of matches.
+This is a simple clone of Tinder’s  application. It allows users to like and dislike other users and see their list of matches.
 
 ### Features:
 
