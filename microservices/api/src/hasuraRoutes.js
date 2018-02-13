@@ -375,7 +375,7 @@ router.route("/delete").post(function(req,res){
                     });
                 }
                 else{
-                  var file_id =  body.profile_file_id
+                  var file_id =  JOSN.parse(body)[0].profile_file_id
                   var deleteFileOptions = {
                     url: config.projectConfig.url.fileStore+file_id,
                     method: 'DELETE',
