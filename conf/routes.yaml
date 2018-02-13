@@ -159,7 +159,7 @@ notify:
     upstreamServicePath: /
     upstreamServicePort: 80
     corsPolicy: allow_all
-ui:
+companion:
   /:
     corsPolicy: null
     enableAuth: true
