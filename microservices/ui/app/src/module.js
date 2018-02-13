@@ -94,13 +94,17 @@ export function takeToHome(result){
   .then(function(result) {
    if(result.message !== 'Select request failed'){
       result.map( s =>{if(s.hasura_id === curentU ){ p = s;} });
-
-      const r = (
-        <div>
-          <Drover logedUser={p} id={curentU} userInfo={result}></Drover>
-        </div>
-      );
-      ReactDOM.render(r,document.getElementById('root'));
+         if(!p){
+           takeToAccountCreate();
+         }
+         else{
+           const r = (
+             <div>
+               <Drover logedUser={p} id={curentU} userInfo={result}></Drover>
+             </div>
+           );
+           ReactDOM.render(r,document.getElementById('root'));
+         }
    }else{
      alert("something went wrong please try again!")
    }
