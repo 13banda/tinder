@@ -20,7 +20,7 @@ The app builds on top the following Hasura APIs:
  
 ## Instructions on using the app
 1. Go to this URL:
-[Companion](https://ui.gamey34.hasura-app.io/)
+[Companion](https://companion.gamey34.hasura-app.io/)
 
 You will see the Login/Signup page. Enter your the Username and Password for creating a new account or logging in.
 
