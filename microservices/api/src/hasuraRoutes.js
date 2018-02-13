@@ -322,70 +322,73 @@ router.route("/delete").post(function(req,res){
     const hasura_role = req.headers['x-hasura-role'];
     const hasura_allowed_role = req.headers['x-hasura-allowed-roles'];
     // common headers for request as admin
-    var headers = {
-        'Content-Type': 'application/json',
-        'X-Hasura-User-Id': 1,
-        'X-Hasura-Role': "admin",
-        "X-Hasura-Allowed-Roles": "user,admin"
-      }
+        var headers = {
+            'Content-Type': 'application/json',
+            'X-Hasura-User-Id': 1,
+            'X-Hasura-Role': "admin",
+            "X-Hasura-Allowed-Roles": "user,admin"
+          }
 
-      var deleteOptions = {
-        url: config.projectConfig.url.auth.delete_user,
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({
-            "hasura_id": Number(hasura_id)
-        })
-      }
-      request(deleteOptions, function(error, response, body) {
-        if (error) {
-            console.log(error)
-            res.status(500).json({
-              'error': error,
-            'message': 'delete-user request failed'
-          });
-      }
-      else
-      {
-          var selectFileOptions = {
-            url: config.projectConfig.url.data,
+          var deleteOptions = {
+            url: config.projectConfig.url.auth.delete_user,
             method: 'POST',
             headers: headers,
             body: JSON.stringify({
-              "type": "select",
-              "args": {
-                  "table": "userinfo",
-                  "columns": [
-                      "profile_file_id"
-                  ],
-                  "where": {
-                      "hasura_id": {
-                          "$eq": Number(hasura_id)
-                      }
-                  }
-              }
-          request(selectFileOptions, function(error, response, body) {
+                "hasura_id": Number(hasura_id)
+            })
+          }
+          request(deleteOptions, function(error, response, body) {
             if (error) {
+                console.log(error)
                 res.status(500).json({
                   'error': error,
-                  'message': 'delete-user request failed'
-                });
-            }
-            else{
-                var file_id =  body.profile_file_id
-                var deleteFileOptions = {
-                  url: config.projectConfig.url.fileStore+file_id,
-                  method: 'DELETE',
-                  headers: headers,
+                'message': 'delete-user request failed'
+              });
+          }
+          else
+          {
+            //delete user file
+              var selectFileOptions = {
+                url: config.projectConfig.url.data,
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({
+                  "type": "select",
+                  "args": {
+                      "table": "userinfo",
+                      "columns": [
+                          "profile_file_id"
+                      ],
+                      "where": {
+                          "hasura_id": {
+                              "$eq": Number(hasura_id)
+                          }
+                      }
+                  }
+                })
+              }
+              request(selectFileOptions, function(error, response, body) {
+                if (error) {
+                    res.status(500).json({
+                      'error': error,
+                      'message': 'delete-user request failed'
+                    });
                 }
-                request(deleteFileOptions, function(error, response, body) {
-                  if (error) {
-                      console.log(error)
-                      res.status(500).json({
-                        'error': error,
-                        'message': 'delete-user request failed'
-                      });
-                    }
+                else{
+                  var file_id =  body.profile_file_id
+                  var deleteFileOptions = {
+                    url: config.projectConfig.url.fileStore+file_id,
+                    method: 'DELETE',
+                    headers: headers,
+                  }
+                  request(deleteFileOptions, function(error, response, body) {
+                    if (error) {
+                        console.log(error)
+                        res.status(500).json({
+                          'error': error,
+                          'message': 'delete-user request failed'
+                        });
+                      }
                     else{
                       var deleteOptions = {
                           url: config.projectConfig.url.data,
@@ -439,9 +442,11 @@ router.route("/delete").post(function(req,res){
                           res.json(JSON.parse(body))
                         })
                     }
-                })
-              }
-        //res.json(JSON.parse(body)) this line not execute anywhere
+                  })
+                }
+              })
+          //res.json(JSON.parse(body)) this line not execute anywhere
+        }
       })
     }
     else{
