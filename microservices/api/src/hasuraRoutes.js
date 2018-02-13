@@ -346,7 +346,7 @@ router.route("/delete").post(function(req,res){
               });
           }
           else
-          {
+          {console.log("1");
             //delete user file
               var selectFileOptions = {
                 url: config.projectConfig.url.data,
@@ -375,6 +375,7 @@ router.route("/delete").post(function(req,res){
                     });
                 }
                 else{
+                  console.log("2");
                   const l = JOSN.parse(body);
                   var file_id =  l[0].profile_file_id
                   var deleteFileOptions = {
@@ -391,6 +392,7 @@ router.route("/delete").post(function(req,res){
                         });
                       }
                     else{
+                      console.log("3")
                       var deleteOptions = {
                           url: config.projectConfig.url.data,
                           method: 'POST',
