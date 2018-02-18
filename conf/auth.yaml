@@ -62,7 +62,7 @@ email:
   # used by the auth service to inject the actual token when sending the email.
   verifyTemplate: |
     Hi, Please click on <br/>
-    https://auth.{{ cluster.name }}.hasura-app.io/v1/providers/email/verify-email?token={{ "{{token}}" }}
+    <a herf="https://auth.{{ cluster.name }}.hasura-app.io/v1/providers/email/verify-email?token={{ "{{token}}" }}" >verify</a>
     to verify your email.
   # Email verification token expiry time in days
   verifyTokenExpires: "7"
