@@ -3,10 +3,9 @@ var router = express.Router();
 var config = require('./config');
 var request = require('request');
 
-/*router.route("/").get(function (req, res) {
-  console.log("loges")
-  res.send("Hello-React")});
-*/
+router.route("/").get(function (req, res) {
+  console.log({{ cluster.name }})
+}
 
 // like other user
 router.route("/like").post(function(req,res){
