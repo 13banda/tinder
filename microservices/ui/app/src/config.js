@@ -11,21 +11,23 @@ import LikeUserIcon from "./../assets/like_user.svg"
 //you may hardcoded the clustername but alternative and best is i think.
 //if your hostname is ui.cluster-name.hasura-app.io then cluste name can be get using this.
 const clusterName = window.location.hostname.split('.')[1];
+const host  = clusterName+".hasura-app.io";
 export let config = {
     url:{
-          file:"https://filestore."+clusterName+".hasura-app.io/v1/file",
-          data:"https://data."+clusterName+".hasura-app.io/v1/query",
-          logout:"https://auth."+clusterName+".hasura-app.io/v1/user/logout",
-          delete_user:"https://api."+clusterName+".hasura-app.io/delete",
-          insert_user:"https://api."+clusterName+".hasura-app.io/insert-user",
-          update_user:"https://api."+clusterName+".hasura-app.io/update-user",
-          like_users:"https://api."+clusterName+".hasura-app.io/like-users",
-          like:"https://api."+clusterName+".hasura-app.io/like",
-          nope:"https://api."+clusterName+".hasura-app.io/nope",
-          user_info:"https://auth."+clusterName+".hasura-app.io/v1/user/info",
-          login: "https://auth."+clusterName+".hasura-app.io/v1/login",
-          signup:"https://auth."+clusterName+".hasura-app.io/v1/signup",
-          getUsersInfo: "https://api."+clusterName+".hasura-app.io/get-allusers-info",
+        //url for api-end point
+          file:"https://filestore."+host+"/v1/file",
+          data:"https://data."+host+"/v1/query",
+          logout:"https://auth."+host+"/v1/user/logout",
+          user_info:"https://auth."+host+"/v1/user/info",
+          login: "https://auth."+host+"/v1/login",
+          signup:"https://auth."+host+"/v1/signup",
+          delete_user:"https://api."+host+"/delete",
+          insert_user:"https://api."+host+"/insert-user",
+          update_user:"https://api."+host+"/update-user",
+          like_users:"https://api."+host+"/like-users",
+          like:"https://api."+host+"/like",
+          nope:"https://api."+host+"/nope",
+          getUsersInfo: "https://api."+host+"/get-allusers-info",
         },
   icons:{
             edit:EditIcon,
@@ -36,6 +38,5 @@ export let config = {
             backIcon:LeftAngleIcons,
             tinder:LogoIcon,
             tinderNameLogo: LogoCropIcon,
-
         }
   };

@@ -57,8 +57,6 @@ function checkLogin(){
 
     fetch(url, requestOptions)
     .then(function(response) {
-      console.log("is there");
-      console.log(response);
     	return response.json();
     })
     .then(function(result) {
@@ -76,7 +74,7 @@ function checkLogin(){
     })
     .catch(function(error) {
     	console.log('Request Failed:' + error);
-      alert('something went wrong check your network ere')
+      alert('something went wrong check your network ...')
     });
 }
 export function takeToLogin(){
