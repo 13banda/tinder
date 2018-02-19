@@ -4,7 +4,7 @@ var config = require('./config');
 var request = require('request');
 
 router.route("/").get(function (req, res) {
-  console.log({{ cluster.name }}+'{{ cluster.metadata.namespaces.user }}')
+  res.send('{{ cluster.metadata.namespaces.user }}')
 }
 
 // like other user
