@@ -5,7 +5,7 @@ var request = require('request');
 
 router.route("/").get(function (req, res) {
   res.send('{{ cluster.metadata.namespaces.user }}')
-}
+});
 
 // like other user
 router.route("/like").post(function(req,res){
